@@ -1,29 +1,24 @@
 #!/bin/bash
 
-echo "=== QUICK DEBUG ==="
-echo "Current directory: $(pwd)"
-echo ""
+echo "Installing languages..."
 
-echo "=== LOOKING FOR PISTON ==="
-ls -la / | grep -i piston
-echo ""
+# The API image has CLI at /piston/packages/cli
+cd /piston/packages/cli
 
-echo "=== LOOKING FOR COMMON PATHS ==="
-for dir in "/piston" "/app" "/usr/src/app" "/opt/piston"; do
-  if [ -d "$dir" ]; then
-    echo "✓ Found: $dir"
-    ls -la "$dir" | head -5
-  fi
-done
-echo ""
+# Install your languages
+node index.js install node
+node index.js install typescript
+node index.js install python
+node index.js install java
+node index.js install go
+node index.js install rust
+node index.js install cpp
+node index.js install csharp
+node index.js install ruby
+node index.js install swift
 
-echo "=== LOOKING FOR CLI ==="
-find / -name "cli" -type d 2>/dev/null | head -5
-echo ""
+echo "Languages installed. Starting API..."
 
-echo "=== LOOKING FOR index.js ==="
-find / -name "index.js" 2>/dev/null | head -5
-echo ""
-
-echo "=== DEBUG DONE - CRASHING NOW ==="
-exit 1
+# Start the API server (located at /piston/api)
+cd /piston/api
+node index.js
